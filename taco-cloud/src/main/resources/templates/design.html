@@ -3,14 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 		xmlns:th="http://wwww.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Taco Cloud</title>
 	<link rel="stylesheet" th:href="@{/styles.css}" />
 </head>
 <body>
 	<h1>Design your taco!</h1>
 	<img th:src="@{/images/TacoCloud.png}" />
-	<form method="POST" th:object="${design}">
+	<form method="post" th:object="${design}">
 		<div class="ingredient-group" id="wraps">
 			<h3>Designate your wrap:</h3>
 			<div th:each="ingredient : ${wrap}">
@@ -25,7 +25,8 @@
 				<input name="ingredients" type="checkbox" th:value="${ingredient.id}"/>
 				<span th:text="${ingredient.name}">INGREDIENT</span><br />
 			</div>
-
+		</div>
+		
 		<div class="ingredient-group" id="cheeses">
 			<h3>Choose your cheese:</h3>
 			<div th:each="ingredient : ${cheese}">
@@ -53,6 +54,8 @@
 		<div>
 			<h3>Name your taco creation:</h3>
 			<input type="text" th:field="*{name}"/>
+			<span class="validationError" th:if="${#fields.hasErrors('name')}"
+					th:errors="*{name}">name Error</span>
 			<br />
 			<button>Submit your taco</button>
 		</div>
