@@ -1,4 +1,4 @@
-package tacos;
+package tacos.data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import tacos.Ingredient;
+import tacos.Ingredient.Type;
 
 @Repository
 public class JdbcIngredientRepository implements IngredientRepository{
@@ -24,6 +25,11 @@ public class JdbcIngredientRepository implements IngredientRepository{
 	public Ingredient findOne(String id){
 		return jdbc.queryForObject("select id, name, type from Ingredient where id=?", 
 				this::mapRowToIngredient, id);
+	}
+	@Override
+	public Ingredient findOneByName(String name){
+		return jdbc.queryForObject("select id, name, type from Ingredient where name=?", 
+				this::mapRowToIngredient, name);
 	}
 	private Ingredient mapRowToIngredient(ResultSet rs, int rowNum)
 		throws SQLException{
